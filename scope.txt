@@ -1,0 +1,10 @@
+As an anonymous user...
+
+sign in using Spotify account
+see recent reviews, play the music
+
+
+As a signed-in user...
+
+comment other users' reviews
+post your own review

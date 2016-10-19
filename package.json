@@ -1,0 +1,38 @@
+{
+  "name": "spotisomething",
+  "version": "1.0.0",
+  "description": "A proof of concept application written in Node.js+Express+MongoDB as ASW project at ULPGC.",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://fidransky@bitbucket.org/fidransky/eii-asw.git"
+  },
+  "keywords": [
+    "spotify",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "Pavel Fidransky",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/fidransky/eii-asw#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "jade": "^1.11.0",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.6.4",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-beta6",
+    "querystring": "^0.2.0",
+    "request": "^2.75.0",
+    "serve-favicon": "^2.3.0",
+    "spotify-web-api-node": "^2.3.6"
+  }
+}
