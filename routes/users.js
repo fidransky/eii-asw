@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var SpotifyWebApi = require('spotify-web-api-node');
 var MongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
+var userModel = require(__dirname + '/../models/user'); 
+var spotifyApi = require(__dirname + '/../models/spotify').getApi();
 
-var dbFqn = 'mongodb://localhost:27017/myDB';
 
+router.get('/', function(req, res, next) {
+	var dbFqn = 'mongodb://localhost:27017/myDB';
 
-router.get('/', function(req, res) {
 	(function() {
 		mongoose.connect(dbFqn);
 
@@ -29,6 +30,24 @@ router.get('/', function(req, res) {
 	});
 
 	res.render('users');
+});
+
+router.get('/detail', function(req, res, next) {
+	/*
+	spotifyApi.setAccessToken(req.query.access_token);
+
+	spotifyApi.getMe().then(function(data) {
+		res.render('user-detail', data.body);
+
+	}, function(err) {
+		console.log('error:', err);
+		res.render('user-detail', {});
+	});
+	*/
+
+	res.render('user-detail', {
+		user: req.user,
+	});
 });
 
 

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	#login
+		h1 #{title}
+
+	#loggedin.hidden
+		#user-profile
+		#oauth
+		button#obtain-new-token.btn.btn-default Obtain new token using the refresh token

@@ -14,6 +14,22 @@ var logger = require('morgan');
 var path = require('path');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
+var spotifyStrategy = require(__dirname + '/models/spotify').getPassportStrategy();
+
+
+// Passport session setup.
+passport.serializeUser(function(user, done) {
+	done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+	done(null, obj);
+});
+
+passport.use(spotifyStrategy);
 
 
 var app = express();
@@ -27,10 +43,29 @@ app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(cookieParser());
+app.use(bodyParser());
+app.use(session({
+	secret: 'whatever',
+	saveUninitialized: true,
+	resave: true,
+}));
+
+// Initialize Passport. Also use passport.session() middleware, to support persistent login sessions (recommended).
+app.use(passport.initialize());
+app.use(passport.session());
+
+// set global variables
+app.locals.title = 'SpotiSomething';
 
 var index = require('./routes/index');
 var login = require('./routes/login');
 var users = require('./routes/users');
+
+app.use(function(req, res, next) {
+	console.log('logged in:', req.isAuthenticated());
+
+	next();
+});
 
 app.use('/', index);
 app.use('/login', login);
@@ -44,7 +79,6 @@ app.use(function(req, res, next) {
 	//next(err);
 });
 
-/*
 // error handlers
 // development error handler - will print stacktrace
 if (app.get('env') === 'development') {
@@ -64,10 +98,23 @@ app.use(function(err, req, res, next) {
 		error: {}
 	});
 });
-*/
 
-console.log('Listening on 8888');
+
 app.listen(8888);
+
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed. Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+
+	res.redirect('/login');
+}
 
 
 module.exports = app;
