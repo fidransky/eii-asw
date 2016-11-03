@@ -1,5 +1,5 @@
 {
-  "name": "spotisomething",
+  "name": "critify",
   "version": "1.0.0",
   "description": "A proof of concept application written in Node.js+Express+MongoDB as ASW project at ULPGC.",
   "main": "app.js",

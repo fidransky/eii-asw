@@ -1,5 +1,5 @@
-# quickApp
-SpotiSomething app in NodeJS+Express+MongoDB.
+# Critify
+Proof of concept app written in NodeJS+Express+MongoDB.
 
 ####Steps for starting the app:####
 
