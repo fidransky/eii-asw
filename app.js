@@ -1,12 +1,3 @@
-/**
- * This is an example of a basic node.js script that performs
- * the Authorization Code oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
- */
-
 var express = require('express');
 var request = require('request');
 var favicon = require('serve-favicon');
@@ -67,6 +58,7 @@ var users = require('./routes/users');
 
 app.use(function(req, res, next) {
 	console.log('logged in:', req.isAuthenticated());
+	console.log(req.user);
 
 	next();
 });
@@ -105,20 +97,6 @@ app.use(function(err, req, res, next) {
 
 
 app.listen(8888);
-
-
-// Simple route middleware to ensure user is authenticated.
-//   Use this route middleware on any resource that needs to be protected.  If
-//   the request is authenticated (typically via a persistent login session),
-//   the request will proceed. Otherwise, the user will be redirected to the
-//   login page.
-function ensureAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-
-	res.redirect('/login');
-}
 
 
 module.exports = app;
