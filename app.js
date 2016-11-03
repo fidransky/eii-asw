@@ -18,15 +18,19 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var spotifyStrategy = require(__dirname + '/models/spotify').getPassportStrategy();
+var UserManager = require(__dirname + '/models/userManager');
 
 
 // Passport session setup.
 passport.serializeUser(function(user, done) {
-	done(null, user);
+	done(null, user.spotifyId);
 });
 
-passport.deserializeUser(function(obj, done) {
-	done(null, obj);
+passport.deserializeUser(function(spotifyId, done) {
+	UserManager.find(spotifyId, function(err, user) {
+		console.log('app.js...');
+		done(err, user);
+	});
 });
 
 passport.use(spotifyStrategy);

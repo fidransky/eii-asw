@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
-var userModel = require(__dirname + '/../models/user'); 
-var spotifyApi = require(__dirname + '/../models/spotify').getApi();
+var UserManager = require(__dirname + '/../models/userManager'); 
+var Spotify = require(__dirname + '/../models/spotify');
+var spotifyApi = Spotify.getApi();
 
 
 router.get('/', function(req, res, next) {
@@ -32,16 +33,14 @@ router.get('/', function(req, res, next) {
 	res.render('users');
 });
 
-router.get('/detail', function(req, res, next) {
+router.get('/detail', Spotify.ensureAuthenticated, function(req, res, next) {
 	/*
 	spotifyApi.setAccessToken(req.query.access_token);
 
 	spotifyApi.getMe().then(function(data) {
-		res.render('user-detail', data.body);
-
+		console.log(data.body);
 	}, function(err) {
 		console.log('error:', err);
-		res.render('user-detail', {});
 	});
 	*/
 

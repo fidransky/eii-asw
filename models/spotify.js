@@ -2,6 +2,7 @@ var request = require('request');
 var querystring = require('querystring');
 var SpotifyWebApi = require('spotify-web-api-node');
 var SpotifyStrategy = require(__dirname + '/../node_modules/passport-spotify/lib/passport-spotify/index').Strategy;
+var UserManager = require(__dirname + '/userManager');
 
 
 var scope = 'user-read-private user-read-email';
@@ -24,12 +25,9 @@ module.exports = {
 			clientSecret: client_secret,
 			callbackURL: redirect_uri,
 		}, function(accessToken, refreshToken, profile, done) {
-			/*
-			User.findOrCreate({ spotifyId: profile.id }, function (err, user) {
-				return done(err, user);
+			UserManager.findOrCreate(profile.id, profile, function(err, user) {
+				return done(err, user[0]);
 			});
-			*/
-			return done(null, profile);
 		});
 	},
 	getLoginUrl: function(state) {
@@ -67,5 +65,17 @@ module.exports = {
 			},
 			json: true
 		}, callback);
+	},
+	// Simple route middleware to ensure user is authenticated.
+	//   Use this route middleware on any resource that needs to be protected.  If
+	//   the request is authenticated (typically via a persistent login session),
+	//   the request will proceed. Otherwise, the user will be redirected to the
+	//   login page.
+	ensureAuthenticated: function(req, res, next) {
+		if (req.isAuthenticated()) {
+			return next();
+		}
+
+		res.redirect('/login');
 	},
 };
