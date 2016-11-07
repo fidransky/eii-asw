@@ -1,6 +1,7 @@
 var User = require(__dirname + '/user');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/critify');
+
+mongoose.connect(process.env.USERDOMAIN === 'THINKPAD' ? 'mongodb://localhost/critify' : process.env.MONGODB_DSN);
 
 
 var manager = {};
@@ -26,8 +27,6 @@ manager.findOrCreate = function(spotifyId, data, callback) {
 			// save the user
 			user.save(function(err) {
 				if (err) throw err;
-				
-				callback(null, user);
 			});			
 		}
 
