@@ -1,7 +1,7 @@
 var User = require(__dirname + '/user');
 var mongoose = require('mongoose');
 
-mongoose.connect(process.env.USERDOMAIN === 'THINKPAD' ? 'mongodb://localhost/critify' : process.env.MONGODB_DSN);
+mongoose.connect(process.env.MONGODB_DSN || 'mongodb://localhost/critify');
 
 
 var manager = {};
