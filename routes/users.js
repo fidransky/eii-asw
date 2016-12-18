@@ -6,13 +6,9 @@ var spotifyApi = Spotify.getApi();
 
 /* GET user detail page. */
 router.get('/detail', Spotify.ensureAuthenticated, function(req, res, next) {
-	var user = req.user[0];
+	spotifyApi.setAccessToken(req.user.access_token);
 
-	spotifyApi.setAccessToken(user.access_token);
-
-	res.render('user-detail', {
-		user: user,
-	});
+	res.render('user-detail');
 });
 
 module.exports = router;

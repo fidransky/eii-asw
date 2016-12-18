@@ -19,8 +19,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(spotifyId, done) {
 	UserManager.find(spotifyId, function(err, user) {
-		console.log('app.js...');
-		done(err, user);
+		done(err, user[0]);
 	});
 });
 
@@ -60,6 +59,8 @@ var search = require('./routes/search');
 app.use(function(req, res, next) {
 	console.log('logged in:', req.isAuthenticated());
 	//console.log('user:', req.user);
+
+	app.locals.user = req.user;
 
 	next();
 });
