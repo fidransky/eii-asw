@@ -36,7 +36,15 @@ html
 								a(href="/users/detail") User profile
 							li
 								a(href="/login/logout") Logout
-								
+
+					if user
+						form(action="/search").navbar-form.navbar-left
+							div.form-group
+								input(type="text", name="q", placeholder="Search").form-control
+
+							input(type="hidden", name="types[]", value="track")
+
+							button(type="submit").btn.btn-default Submit
 
 		.container
 			block content

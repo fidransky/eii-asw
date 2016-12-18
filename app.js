@@ -55,6 +55,7 @@ app.locals.title = 'Critify';
 var index = require('./routes/index');
 var login = require('./routes/login');
 var users = require('./routes/users');
+var search = require('./routes/search');
 
 app.use(function(req, res, next) {
 	console.log('logged in:', req.isAuthenticated());
@@ -66,6 +67,7 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/login', login);
 app.use('/users', users);
+app.use('/search', search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
