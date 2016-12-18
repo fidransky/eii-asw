@@ -2,23 +2,8 @@ var express = require('express');
 var router = express.Router();
 var querystring = require('querystring');
 var passport = require('passport');
-var spotifyStrategy = require(__dirname + '/../models/spotify').getPassportStrategy();
+var Spotify = require(__dirname + '/../models/spotify');
 var UserManager = require(__dirname + '/../models/userManager');
-
-
-// Passport session setup.
-passport.serializeUser(function(user, done) {
-	done(null, user.spotifyId);
-});
-
-passport.deserializeUser(function(spotifyId, done) {
-	UserManager.find(spotifyId, function(err, user) {
-		console.log('login.js...');
-		done(err, user);
-	});
-});
-
-passport.use(spotifyStrategy);
 
 
 // GET login page
