@@ -14,7 +14,7 @@ var UserManager = require(__dirname + '/models/userManager');
 
 // Passport session setup.
 passport.serializeUser(function(user, done) {
-	done(null, user.spotifyId);
+	done(null, user.spotify_id);
 });
 
 passport.deserializeUser(function(spotifyId, done) {
@@ -58,7 +58,7 @@ var users = require('./routes/users');
 
 app.use(function(req, res, next) {
 	console.log('logged in:', req.isAuthenticated());
-	console.log(req.user);
+	//console.log('user:', req.user);
 
 	next();
 });

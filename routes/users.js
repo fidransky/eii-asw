@@ -4,22 +4,15 @@ var UserManager = require(__dirname + '/../models/userManager');
 var Spotify = require(__dirname + '/../models/spotify');
 var spotifyApi = Spotify.getApi();
 
-
+/* GET user detail page. */
 router.get('/detail', Spotify.ensureAuthenticated, function(req, res, next) {
-	/*
-	spotifyApi.setAccessToken(req.query.access_token);
+	var user = req.user[0];
 
-	spotifyApi.getMe().then(function(data) {
-		console.log(data.body);
-	}, function(err) {
-		console.log('error:', err);
-	});
-	*/
+	spotifyApi.setAccessToken(user.access_token);
 
 	res.render('user-detail', {
-		user: req.user,
+		user: user,
 	});
 });
-
 
 module.exports = router;

@@ -1,7 +1,6 @@
-var User = require(__dirname + '/user');
+require(__dirname + '/db');
 var mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_DSN || 'mongodb://localhost/critify');
+var User = mongoose.model('User');
 
 
 var manager = {};
@@ -17,17 +16,23 @@ manager.save = function(data) {
 	});	
 };
 
-manager.findOrCreate = function(spotifyId, data, callback) {
-	User.find({ spotifyId: spotifyId }, function(err, user) {
+manager.findOrCreate = function(userData, accessToken, callback) {
+	User.find({ spotify_id: userData.id }, function(err, user) {
 		if (err || user.length === 0) {
 			user = User({
-				spotifyId: spotifyId,
+				spotify_id: userData.id,
+				username: userData.username,
+				name: userData.displayName,
+				mail: userData.emails[0].value,
+				profile_url: userData.profileUrl,
+				country: userData.country,
+				access_token: accessToken,
 			});
 
 			// save the user
 			user.save(function(err) {
 				if (err) throw err;
-			});			
+			});
 		}
 
 		callback(null, user);
@@ -45,7 +50,7 @@ manager.findAll = function() {
 
 // get user by Spotify ID
 manager.find = function(spotifyId, callback) {
-	User.find({ spotifyId: spotifyId }, function(err, user) {
+	User.find({ spotify_id: spotifyId }, function(err, user) {
 		if (err) throw err;
 
 		callback(null, user);
@@ -71,7 +76,7 @@ manager.findByUsername = function(username) {
 };
 
 manager.update = function(spotifyId, data) {
-	User.findOneAndUpdate({ spotifyId: spotifyId }, data, function(err, user) {
+	User.findOneAndUpdate({ spotify_id: spotifyId }, data, function(err, user) {
 		if (err) throw err;
 
 		return user;
@@ -79,7 +84,7 @@ manager.update = function(spotifyId, data) {
 };
 
 manager.delete = function(spotifyId) {
-	User.findOneAndRemove({ spotifyId: spotifyId }, function(err, user) {
+	User.findOneAndRemove({ spotify_id: spotifyId }, function(err, user) {
 		if (err) throw err;
 
 		return true;

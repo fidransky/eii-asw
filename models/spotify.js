@@ -25,7 +25,7 @@ module.exports = {
 			clientSecret: client_secret,
 			callbackURL: redirect_uri,
 		}, function(accessToken, refreshToken, profile, done) {
-			UserManager.findOrCreate(profile.id, profile, function(err, user) {
+			UserManager.findOrCreate(profile, accessToken, function(err, user) {
 				return done(err, user[0]);
 			});
 		});

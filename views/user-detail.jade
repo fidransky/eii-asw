@@ -2,37 +2,3 @@ extends layout
 
 block content
 	h1 Logged in as #{user.username}
-
-	.media
-		.pull-left
-			img.media-object(width="150", src="#{user.images.0.url}")
-
-		.media-body
-			dl.dl-horizontal
-			//-
-				dt Display name
-				dd.clearfix #{user.display_name}
-
-				dt Id
-				dd #{user.id}
-
-				dt Email
-				dd #{user.email}
-
-				dt Spotify URI
-				dd
-					a(href="#{user.external_urls.spotify}") #{user.external_urls.spotify}
-
-				dt Link
-				dd
-					a(href="#{user.href}") #{user.href}
-
-				dt Profile Image
-				dd.clearfix
-					a(href="#{user.images.0.url}") whatever
-
-				dt Country
-				dd #{user.country}
-
-
-	iframe(src="https://embed.spotify.com/?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf", width="300", height="380", frameborder="0", allowtransparency="true")

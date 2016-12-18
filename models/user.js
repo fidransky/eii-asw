@@ -1,12 +1,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+var reviewSchema = require(__dirname + '/review').schema;
 
 // user schema
 var userSchema = new Schema({
-	spotifyId: { type: String, required: true, unique: true },
+	spotify_id: { type: String, required: true, unique: true },
+	username: String,
+	name: String,
+	mail: String,
+	profile_url: String,
+	country: String,
+	access_token: { type: String, required: true },
 	created_at: Date,
-	updated_at: Date
+	updated_at: Date,
+	reviews: [reviewSchema],
 });
 
 // on every save, add the date
@@ -27,6 +34,5 @@ userSchema.pre('save', function(next) {
 
 // create model
 var User = mongoose.model('User', userSchema);
-
 
 module.exports = User;
