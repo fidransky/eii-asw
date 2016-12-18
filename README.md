@@ -13,4 +13,4 @@ Start the app
 $ npm start
 ```
 
-Access from the browser: **http://localhost:8888**
+Access from the browser: **http://localhost:3000**

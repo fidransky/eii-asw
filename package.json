@@ -5,7 +5,7 @@
   "main": "app.js",
   "private": true,
   "scripts": {
-    "start": "node ./app.js",
+    "start": "node_modules\\.bin\\nodemon -e js,jade ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -38,5 +38,8 @@
     "request": "^2.75.0",
     "serve-favicon": "^2.3.0",
     "spotify-web-api-node": "^2.3.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
