@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+	h1 #{review.title}
+
+	iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}", width="300", height="380", frameborder="0", allowtransparency="true")
+
+	div #{review.text}
+
+	div#comments
+		h3 Comments
+
+		form(method="post").form-horizontal
+			div.form-group
+				label(for="author").col-sm-2.control-label Author
+				div.col-sm-10
+					input(type="text", name="author").form-control#author
+
+			div.form-group
+				label(for="title").col-sm-2.control-label Title
+				div.col-sm-10
+					input(type="text", name="title").form-control#title
+
+			div.form-group
+				label(for="text").col-sm-2.control-label Text
+				div.col-sm-10
+					textarea(name="text").form-control#text
+
+			div.form-group
+				div.col-sm-offset-2.col-sm-10
+					button(type="submit").btn.btn-primary Comment
+
+		each comment, index in review.comments
+			strong= comment.author
+			span= comment.title
+			div= comment.text

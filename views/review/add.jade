@@ -1,0 +1,83 @@
+extends ../layout
+
+block content
+	h1 #{title}
+
+	form
+		div.form-group
+			label(for="term") Term
+			input(type="text", name="q", value="#{term}", placeholder="Enter searched term").form-control#term
+
+		div.checkbox
+			label.checkbox-inline(for="typeArtist")
+				input(type="checkbox", name="types[]", value="artist", checked=(types.indexOf('artist') != -1))#typeArtist
+				| artists
+
+			label.checkbox-inline(for="typeAlbum")
+				input(type="checkbox", name="types[]", value="album", checked=(types.indexOf('album') != -1))#typeAlbum
+				| albums
+
+			label.checkbox-inline(for="typeTrack")
+				input(type="checkbox", name="types[]", value="track", checked=(types.indexOf('track') != -1))#typeTrack
+				| tracks
+
+		input(type="submit", value="Search").btn.btn-primary
+
+	if data
+		div
+			ul(role="tablist").nav.nav-tabs
+				if data.artists
+					li(role="presentation").active
+						a(href="#artists", aria-controls="artists", role="tab", data-toggle="tab") Artists
+				if data.albums
+					li(role="presentation")
+						a(href="#albums", aria-controls="albums", role="tab", data-toggle="tab") Albums
+				if data.tracks
+					li(role="presentation")
+						a(href="#tracks", aria-controls="tracks", role="tab", data-toggle="tab") Tracks
+
+			div.tab-content
+				div(role="tabpanel").tab-pane.active#artists
+					if data.artists
+						div.row
+							each item, index in data.artists.items
+								div(data-id="#{item.id}", data-type="artist").col-md-3.spotify-item.spotify-artist= item.name
+
+				div(role="tabpanel").tab-pane#albums
+					if data.albums
+						div.row
+							each item, index in data.albums.items
+								div(data-id="#{item.id}", data-type="album").col-md-3.spotify-item.spotify-album= item.name
+
+				div(role="tabpanel").tab-pane#tracks
+					if data.tracks
+						div.row
+							each item, index in data.tracks.items
+								div(data-id="#{item.id}", data-type="track").col-md-3.spotify-item.spotify-track= item.name
+
+
+		form(method="post", action="/review/add").form-horizontal
+			input(type="hidden", name="spotifyItemType")#spotifyItemType
+			input(type="hidden", name="spotifyItemId")#spotifyItemId
+
+			div.form-group
+				label(for="title").col-sm-2.control-label Title
+				div.col-sm-10
+					input(type="text", name="title").form-control#title
+
+			div.form-group
+				label(for="text").col-sm-2.control-label Text
+				div.col-sm-10
+					textarea(name="text").form-control#text
+
+			div.form-group
+				label(for="rating").col-sm-2.control-label Your rating
+				div.col-sm-10
+					input(type="number", name="rating").form-control#rating
+
+			div.form-group
+				div.col-sm-offset-2.col-sm-10
+					button(type="submit").btn.btn-primary Publish
+
+block append scripts
+	script(src="../js/scripts.js")

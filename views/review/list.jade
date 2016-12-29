@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+	each review, index in reviews
+		h2
+			a(href="review/view/#{review.id}") #{review.title}
+
+		iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}", width="300", height="380", frameborder="0", allowtransparency="true")
+
+		div #{review.text}
