@@ -3,10 +3,8 @@ var router = express.Router({mergeParams: true});
 var async = require('async');
 var spotify = require(__dirname + '/../models/spotify');
 var spotifyApi = spotify.getApi();
-var db = require(__dirname + '/../models/db');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var UserManager = require(__dirname + '/../models/userManager');
 var Review = mongoose.model('Review');
 var Comment = mongoose.model('Comment');
 var Reaction = mongoose.model('Reaction');
@@ -26,14 +24,14 @@ var countReactions = function(entity) {
 router.get('/', function(req, res, next) {
 	async.parallel({
 		user: function(cb) {
-			return UserManager.find(req.params.userId, function(err, users) {
-				return cb(err, users[0]);
-			});
+			return User.findOne({ spotify_id: req.params.userId }, cb);
 		},
 		reviews: function(cb) {
 			return Review.find({
 				author: req.params.userId,
-			}, cb);
+			}).sort({
+				created_at: -1,
+			}).exec(cb);
 		},
 	}, function(err, results) {
 		res.render('review/list', results);
@@ -43,13 +41,24 @@ router.get('/', function(req, res, next) {
 /* GET add review page. */
 router.get('/add', spotify.ensureAuthenticated, function(req, res, next) {
 	var term = req.query.q;
+
 	if (term) {
 		var types = req.query.types;
 
 		spotifyApi.search(term, types, { limit: 4 }).then(function(data) {
+			var selectedType;
+			if (data.body.artists && data.body.artists.total > 0) {
+				selectedType = 'artists';
+			} else if (data.body.albums && data.body.albums.total > 0) {
+				selectedType = 'albums';
+			} else if (data.body.tracks && data.body.tracks.total > 0) {
+				selectedType = 'tracks';
+			}
+
 			res.render('review/add', {
 				types: types,
 				term: term,
+				selectedType: selectedType,
 				data: data.body,
 			});
 		});
@@ -58,7 +67,8 @@ router.get('/add', spotify.ensureAuthenticated, function(req, res, next) {
 		res.render('review/add', {
 			types: [],
 			term: '',
-			data: [],
+			selectedType: null,
+			data: null,
 		});
 	}
 });

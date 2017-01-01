@@ -9,7 +9,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var spotifyStrategy = require(__dirname + '/models/spotify').getPassportStrategy();
-var UserManager = require(__dirname + '/models/userManager');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 
 // Passport session setup.
@@ -18,8 +19,8 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(spotifyId, done) {
-	UserManager.find(spotifyId, function(err, user) {
-		done(err, user[0]);
+	User.findOne({ spotify_id: spotifyId }, function(err, user) {
+		done(err, user);
 	});
 });
 

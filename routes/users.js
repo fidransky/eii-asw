@@ -3,16 +3,14 @@ var router = express.Router({mergeParams: true});
 var async = require('async');
 var spotify = require(__dirname + '/../models/spotify');
 var mongoose = require('mongoose');
-var UserManager = require(__dirname + '/../models/userManager');
+var User = mongoose.model('User');
 var Review = mongoose.model('Review');
 
 /* GET user detail page. */
 router.get('/', function(req, res, next) {
 	async.parallel({
 		user: function(cb) {
-			return UserManager.find(req.params.userId, function(err, users) {
-				return cb(err, users[0]);
-			});
+			return User.findOne({ spotify_id: req.params.userId }, cb);
 		},
 		reviews: function(cb) {
 			return Review.find({

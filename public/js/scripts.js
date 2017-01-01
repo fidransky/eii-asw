@@ -3,4 +3,6 @@ $('.spotify-item').click(function(e) {
 
 	$('#spotifyItemType').val(thiz.data('type'));
 	$('#spotifyItemId').val(thiz.data('id'));
+
+	$('#write-review-box').removeClass('hidden');
 });

@@ -2,7 +2,9 @@ var request = require('request');
 var querystring = require('querystring');
 var SpotifyWebApi = require('spotify-web-api-node');
 var SpotifyStrategy = require(__dirname + '/../node_modules/passport-spotify/lib/passport-spotify/index').Strategy;
-var UserManager = require(__dirname + '/userManager');
+var db = require('./db');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 
 var scope = 'user-read-private user-read-email';
@@ -25,8 +27,25 @@ module.exports = {
 			clientSecret: client_secret,
 			callbackURL: redirect_uri,
 		}, function(accessToken, refreshToken, profile, done) {
-			UserManager.findOrCreate(profile, accessToken, function(err, user) {
-				return done(err, user[0]);
+			User.findOne({ spotify_id: profile.id }, function(err, user) {
+				if (err || user === null) {
+					user = User({
+						spotify_id: profile.id,
+						username: profile.username,
+						name: profile.displayName,
+						mail: profile.emails[0].value,
+						profile_url: profile.profileUrl,
+						country: profile.country,
+						access_token: accessToken,
+					});
+
+					// save the user
+					user.save(function(err) {
+						if (err) throw err;
+					});
+				}
+
+				return done(err, user);
 			});
 		});
 	},

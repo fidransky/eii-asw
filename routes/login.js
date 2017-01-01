@@ -2,9 +2,7 @@ var express = require('express');
 var router = express.Router();
 var querystring = require('querystring');
 var passport = require('passport');
-var Spotify = require(__dirname + '/../models/spotify');
-var UserManager = require(__dirname + '/../models/userManager');
-
+var spotify = require(__dirname + '/../models/spotify');
 
 // GET login page
 router.get('/in', passport.authenticate('spotify', {
@@ -29,7 +27,7 @@ router.get('/out', function(req, res) {
 // GET refresh token
 router.get('/refresh_token', function(req, res) {
 	// requesting access token from refresh token
-	Spotify.getRefreshToken(req.query.refresh_token, function(error, response, body) {
+	spotify.getRefreshToken(req.query.refresh_token, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
 			var access_token = body.access_token;
 			res.send({
@@ -38,6 +36,5 @@ router.get('/refresh_token', function(req, res) {
 		}
 	});
 });
-
 
 module.exports = router;

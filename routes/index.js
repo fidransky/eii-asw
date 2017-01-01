@@ -5,13 +5,12 @@ var Review = mongoose.model('Review');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	Review.find({}, function(err, reviews) {
+	Review.find({}).sort({
+		created_at: -1,
+	}).exec(function(err, reviews) {
 		if (err) throw err;
 
-		res.render('review/list', {
-			user: {
-				username: 'none',
-			},
+		res.render('index', {
 			reviews: reviews,
 		});
 	});
