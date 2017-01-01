@@ -22,6 +22,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/fidransky/eii-asw#readme",
   "dependencies": {
+    "async": "^2.1.4",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "debug": "^2.2.0",

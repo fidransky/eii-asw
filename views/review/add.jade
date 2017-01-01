@@ -56,7 +56,7 @@ block content
 								div(data-id="#{item.id}", data-type="track").col-md-3.spotify-item.spotify-track= item.name
 
 
-		form(method="post", action="/review/add").form-horizontal
+		form(method="post").form-horizontal
 			input(type="hidden", name="spotifyItemType")#spotifyItemType
 			input(type="hidden", name="spotifyItemId")#spotifyItemId
 
@@ -80,4 +80,4 @@ block content
 					button(type="submit").btn.btn-primary Publish
 
 block append scripts
-	script(src="../js/scripts.js")
+	script(src="/js/scripts.js")

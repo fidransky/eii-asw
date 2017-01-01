@@ -5,6 +5,7 @@ var reactionSchema = require(__dirname + '/reaction').schema;
 
 // review schema
 var reviewSchema = new Schema({
+	author: String,
 	spotify_item_type: { type: String, required: true },
 	spotify_item_id: { type: String, required: true },
 	title: String,

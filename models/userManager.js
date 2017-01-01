@@ -59,7 +59,7 @@ manager.find = function(spotifyId, callback) {
 
 // get user by ID
 manager.findById = function(id) {
-	User.find({ id: id }, function(err, user) {
+	User.find({ _id: id }, function(err, user) {
 		if (err) throw err;
 
 		return user;

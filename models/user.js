@@ -13,7 +13,6 @@ var userSchema = new Schema({
 	access_token: { type: String, required: true },
 	created_at: Date,
 	updated_at: Date,
-	reviews: [reviewSchema],
 });
 
 // on every save, add the date

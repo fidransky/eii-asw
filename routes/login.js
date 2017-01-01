@@ -7,7 +7,7 @@ var UserManager = require(__dirname + '/../models/userManager');
 
 
 // GET login page
-router.get('/', passport.authenticate('spotify', {
+router.get('/in', passport.authenticate('spotify', {
 	scope: ['user-read-private', 'user-read-email'],
 }), function(req, res) {
 	// The request will be redirected to spotify for authentication, so this function will not be called.
@@ -15,13 +15,13 @@ router.get('/', passport.authenticate('spotify', {
 
 // GET login callback
 router.get('/callback', passport.authenticate('spotify', {
-	failureRedirect: '/login',
+	failureRedirect: '/log/in',
 }), function(req, res) {
-	res.redirect('/users/detail');
+	res.redirect('/'+ req.user.spotify_id);
 });
 
 // GET logout
-router.get('/logout', function(req, res) {
+router.get('/out', function(req, res) {
 	req.logout();
 	res.redirect('/');
 });

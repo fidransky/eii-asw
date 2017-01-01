@@ -1,5 +1,24 @@
 extends ../layout
 
+mixin reaction(entity, action)
+	span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
+	span.badge= entity.reactions.ups
+
+	span(aria-hidden="true").glyphicon.glyphicon-thumbs-down
+	span.badge= entity.reactions.downs
+
+	form(method="post", action="#{review.id}/#{action}")
+		input(type="hidden", name="type", value="up")
+
+		button(type="submit").btn.btn-default
+			span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
+
+	form(method="post", action="#{review.id}/#{action}")
+		input(type="hidden", name="type", value="down")
+
+		button(type="submit").btn.btn-default
+			span(aria-hidden="true").glyphicon.glyphicon-thumbs-down
+
 block content
 	h1 #{review.title}
 
@@ -7,10 +26,15 @@ block content
 
 	div #{review.text}
 
+	div#reactions
+		h3 Reactions
+
+		+reaction(review, "reaction")
+
 	div#comments
 		h3 Comments
 
-		form(method="post").form-horizontal
+		form(method="post", action="#{review.id}/comment").form-horizontal
 			div.form-group
 				label(for="author").col-sm-2.control-label Author
 				div.col-sm-10
@@ -34,3 +58,5 @@ block content
 			strong= comment.author
 			span= comment.title
 			div= comment.text
+
+			+reaction(comment, "comment/"+ comment.id +"/reaction")

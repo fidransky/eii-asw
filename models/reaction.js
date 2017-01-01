@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 // reaction schema
 var reactionSchema = new Schema({
-	author: { type: String, required: true },
+	author: String,
 	type: { type: String, required: true },
 	created_at: Date,
 });

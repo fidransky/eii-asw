@@ -9,11 +9,8 @@ html
 		title=title
 
 		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
-		link(href="../css/style.css")
-		style.
-			body {
-				padding-top: 50px;
-			}
+		link(href="https://fonts.googleapis.com/css?family=Merriweather", rel="stylesheet")
+		link(href="/css/style.css", rel="stylesheet")
 
 	body
 		.navbar.navbar-inverse.navbar-fixed-top
@@ -24,27 +21,20 @@ html
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					a.navbar-brand(href="/review") #{title}
+					a.navbar-brand(href="/") #{title}
 
 				.navbar-collapse.collapse#navbar
 					ul.nav.navbar-nav.navbar-right
 						if !user
 							li
-								a(href="/login") Login
+								a(href="/log/in") Login using Spotify
 						else
 							li
-								a(href="/users/detail") User profile
+								a(href="/#{user.spotify_id}/reviews/add").btn.btn-primary.navbar-btn Add a new review
 							li
-								a(href="/login/logout") Logout
-
-					if user
-						form(action="/search").navbar-form.navbar-left
-							div.form-group
-								input(type="text", name="q", placeholder="Search").form-control
-
-							input(type="hidden", name="types[]", value="track")
-
-							button(type="submit").btn.btn-default Submit
+								a(href="/#{user.spotify_id}/reviews") Your reviews
+							li
+								a(href="/log/out") Logout
 
 		.container
 			block content

@@ -8,7 +8,7 @@ var UserManager = require(__dirname + '/userManager');
 var scope = 'user-read-private user-read-email';
 var client_id = 'd9fcafc0362941b98aca40d58b8cf310';
 var client_secret = 'e055dbaa51f54eeba717388d6cad9caa';
-var redirect_uri = 'http://localhost:3000/login/callback';
+var redirect_uri = 'http://localhost:3000/log/callback';
 
 
 module.exports = {
@@ -76,6 +76,6 @@ module.exports = {
 			return next();
 		}
 
-		res.redirect('/login');
+		res.redirect('/log/in');
 	},
 };
