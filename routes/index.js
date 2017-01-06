@@ -7,7 +7,7 @@ var Review = mongoose.model('Review');
 router.get('/', function(req, res, next) {
 	Review.find({}).sort({
 		created_at: -1,
-	}).exec(function(err, reviews) {
+	}).limit(8).exec(function(err, reviews) {
 		if (err) throw err;
 
 		res.render('index', {

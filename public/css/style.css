@@ -17,19 +17,34 @@ a,
 
 a:focus,
 a:hover,
+a:active,
 .btn-link:focus,
-.btn-link:hover {
+.btn-link:hover,
+.btn-link:active {
 	color: #1ED763;
 }
 
 .btn-primary {
+	border-color: #009C3A;
 	background-color: #009C3A;
-	border-width: 0;
 }
 
 .btn-primary:focus,
-.btn-primary:hover {
-	background-color: #1ED763;	
+.btn-primary:hover,
+.btn-primary:active {
+	border-color: #009C3A !important;
+	background-color: #1ED763 !important;
+}
+
+.form-control:focus {
+	border-color: #1ED763;
+}
+
+.form-horizontal .checkbox,
+.form-horizontal .checkbox-inline,
+.form-horizontal .radio,
+.form-horizontal .radio-inline {
+	padding-top: 4px;
 }
 
 .display-inline {
@@ -40,6 +55,20 @@ a:hover,
 	height: 70px;
 	padding: 25px 15px;
 	text-transform: uppercase;
+}
+
+.navbar-btn {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.navbar-inverse .navbar-nav > li > .navbar-btn {
+	color: #eee;
+}
+
+.navbar-inverse .navbar-nav > li > .navbar-btn:focus,
+.navbar-inverse .navbar-nav > li > .navbar-btn:hover {
+	background-color: #1ED763;
 }
 
 @media (min-width: 768px) {
@@ -64,10 +93,59 @@ a:hover,
 }
 
 .footer {
-	color: #fff;
+	color: #666;
 	margin-top: 25px;
 	padding: 15px;
 	background-color: #ccc;
+}
+
+.navbar .spotify-logo {
+	position: relative;
+	top: -6px;
+	height: 25px;
+	margin-left: 6px;
+	margin-bottom: -10px;
+}
+
+.hero-section {
+	position: relative;
+	background-color: rgba(0, 0, 0, 0.85);
+	border-bottom: 1px solid #000;
+}
+
+.hero-section:after {
+	content: '';
+	width: 100%;
+	position: absolute;
+	top: 0;
+	z-index: -1;
+	height: 100%;
+	background: url(../hero-background.jpg) 0 69px fixed;
+}
+
+.hero-section .container {
+	padding: 150px 0;
+}
+
+.hero-title {
+	font-size: 42px;
+	color: #ccc;
+}
+
+.hero-subtitle {
+	font-size: 22px;
+}
+
+.hero-cta-buttons {
+	margin-top: 40px;
+}
+
+.hero-cta-buttons .btn {
+	margin: 0 10px;
+}
+
+.reviews-section {
+	padding: 20px 0;
 }
 
 .review {
@@ -76,6 +154,11 @@ a:hover,
 
 .review-author {
 	color: #a0a0a0;
+}
+
+.review-author:focus,
+.review-author:hover {
+	color: #666;
 }
 
 .review-title {
@@ -88,4 +171,8 @@ a:hover,
 
 .review-player {
 	margin-top: 10px;
+}
+
+.review-rating {
+	font-size: 20px;
 }

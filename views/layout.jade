@@ -27,7 +27,8 @@ html
 					ul.nav.navbar-nav.navbar-right
 						if !loggedUser
 							li
-								a(href="/log/in") Login using Spotify
+								a(href="/log/in") Login using
+									img(src="spotify-logo.png").spotify-logo
 						else
 							li
 								a(href="/#{loggedUser.spotify_id}/review/add").btn.btn-primary.navbar-btn Add a new review
@@ -36,8 +37,7 @@ html
 							li
 								a(href="/log/out") Logout
 
-		.container.content
-			block content
+		block content
 
 		.footer
 			.container

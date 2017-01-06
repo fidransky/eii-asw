@@ -3,100 +3,101 @@ extends ../layout
 include ../mixins.jade
 
 block content
-	h1 Add a new review
+	.content.container
+		h1 Add a new review
 
-	h2.text-muted 1. Find item being reviewed
+		h2.text-muted 1. Find item being reviewed
 
-	form.form-horizontal
-		div.form-group
-			label(for="term").col-sm-2.control-label Term
-			div.col-sm-10
-				input(type="text", name="q", value="#{term}", placeholder="Enter searched term").form-control#term
+		form.form-horizontal
+			div.form-group
+				label(for="term").col-sm-2.control-label Term
+				div.col-sm-8
+					input(type="text", name="q", value="#{term}", placeholder="Enter searched term").form-control#term
 
-		div.form-group
-			label.col-sm-2.control-label Type
-			div.col-sm-10
-				div.checkbox
-					label.checkbox-inline(for="typeArtist")
-						input(type="checkbox", name="types[]", value="artist", checked=(types.indexOf('artist') != -1 || types.length === 0))#typeArtist
-						| artist
+			div.form-group
+				label.col-sm-2.control-label Type
+				div.col-sm-8
+					div.checkbox
+						label.checkbox-inline(for="typeArtist")
+							input(type="checkbox", name="types[]", value="artist", checked=(types.indexOf('artist') != -1 || types.length === 0))#typeArtist
+							| artist
 
-					label.checkbox-inline(for="typeAlbum")
-						input(type="checkbox", name="types[]", value="album", checked=(types.indexOf('album') != -1 || types.length === 0))#typeAlbum
-						| album
+						label.checkbox-inline(for="typeAlbum")
+							input(type="checkbox", name="types[]", value="album", checked=(types.indexOf('album') != -1 || types.length === 0))#typeAlbum
+							| album
 
-					label.checkbox-inline(for="typeTrack")
-						input(type="checkbox", name="types[]", value="track", checked=(types.indexOf('track') != -1 || types.length === 0))#typeTrack
-						| track
+						label.checkbox-inline(for="typeTrack")
+							input(type="checkbox", name="types[]", value="track", checked=(types.indexOf('track') != -1 || types.length === 0))#typeTrack
+							| track
 
-		div.form-group
-			div.col-sm-10.col-sm-offset-2
-				input(type="submit", value="Search").btn.btn-primary
+			div.form-group
+				div.col-sm-10.col-sm-offset-2
+					input(type="submit", value="Search").btn.btn-primary
 
-	if data
-		div#pick-item-box
-			h2.text-muted 2. Pick the reviewed item
+		if data
+			div#pick-item-box
+				h2.text-muted 2. Pick the reviewed item
 
-			ul(role="tablist").nav.nav-tabs
-				if data.artists
-					li(role="presentation", class={ active: selectedType === 'artists' })
-						a(href="#artists", aria-controls="artists", role="tab", data-toggle="tab") Artists
-				if data.albums
-					li(role="presentation", class={ active: selectedType === 'albums' })
-						a(href="#albums", aria-controls="albums", role="tab", data-toggle="tab") Albums
-				if data.tracks
-					li(role="presentation", class={ active: selectedType === 'tracks' })
-						a(href="#tracks", aria-controls="tracks", role="tab", data-toggle="tab") Tracks
-
-			div.tab-content
-				div(role="tabpanel", class={ active: selectedType === 'artists' }).tab-pane#artists
+				ul(role="tablist").nav.nav-tabs
 					if data.artists
-						div.row
-							each item, index in data.artists.items
-								div(data-id="#{item.id}", data-type="artist").col-md-3.spotify-item.spotify-artist
-									span=item.name
-
-				div(role="tabpanel", class={ active: selectedType === 'albums' }).tab-pane#albums
+						li(role="presentation", class={ active: selectedType === 'artists' })
+							a(href="#artists", aria-controls="artists", role="tab", data-toggle="tab") Artists
 					if data.albums
-						div.row
-							each item, index in data.albums.items
-								div(data-id="#{item.id}", data-type="album").col-md-3.spotify-item.spotify-album
-									img(src="#{item.images[0].url}").img-responsive
-									span=item.name
-
-				div(role="tabpanel", class={ active: selectedType === 'tracks' }).tab-pane#tracks
+						li(role="presentation", class={ active: selectedType === 'albums' })
+							a(href="#albums", aria-controls="albums", role="tab", data-toggle="tab") Albums
 					if data.tracks
-						div.row
-							each item, index in data.tracks.items
-								div(data-id="#{item.id}", data-type="track").col-md-3.spotify-item.spotify-track
-									span=item.name
+						li(role="presentation", class={ active: selectedType === 'tracks' })
+							a(href="#tracks", aria-controls="tracks", role="tab", data-toggle="tab") Tracks
+
+				div.tab-content
+					div(role="tabpanel", class={ active: selectedType === 'artists' }).tab-pane#artists
+						if data.artists
+							div.row
+								each item, index in data.artists.items
+									div(data-id="#{item.id}", data-type="artist").col-md-3.spotify-item.spotify-artist
+										h2= item.name
+
+					div(role="tabpanel", class={ active: selectedType === 'albums' }).tab-pane#albums
+						if data.albums
+							div.row
+								each item, index in data.albums.items
+									div(data-id="#{item.id}", data-type="album").col-md-3.spotify-item.spotify-album
+										img(src="#{item.images[0].url}").img-responsive
+										span=item.name
+
+					div(role="tabpanel", class={ active: selectedType === 'tracks' }).tab-pane#tracks
+						if data.tracks
+							div.row
+								each item, index in data.tracks.items
+									div(data-id="#{item.id}", data-type="track").col-md-3.spotify-item.spotify-track
+										h2= item.name
 
 
-		div.hidden#write-review-box
-			h2.text-muted 3. Write your review
+			div.hidden#write-review-box
+				h2.text-muted 3. Write your review
 
-			form(method="post").form-horizontal
-				input(type="hidden", name="spotifyItemType")#spotifyItemType
-				input(type="hidden", name="spotifyItemId")#spotifyItemId
+				form(method="post").form-horizontal
+					input(type="hidden", name="spotifyItemType")#spotifyItemType
+					input(type="hidden", name="spotifyItemId")#spotifyItemId
 
-				div.form-group
-					label(for="title").col-sm-2.control-label Title
-					div.col-sm-10
-						input(type="text", name="title").form-control#title
+					div.form-group
+						label(for="title").col-sm-2.control-label Title
+						div.col-sm-8
+							input(type="text", name="title").form-control#title
 
-				div.form-group
-					label(for="text").col-sm-2.control-label Text
-					div.col-sm-10
-						textarea(name="text").form-control#text
+					div.form-group
+						label(for="text").col-sm-2.control-label Text
+						div.col-sm-8
+							textarea(name="text", rows="20").form-control#text
 
-				div.form-group
-					label(for="rating").col-sm-2.control-label Your rating
-					div.col-sm-10
-						input(type="number", name="rating", min="1", max="5", step="1").form-control#rating
+					div.form-group
+						label(for="rating").col-sm-2.control-label Your rating
+						div.col-sm-8
+							input(type="number", name="rating", min="1", max="5", step="1").form-control#rating
 
-				div.form-group
-					div.col-sm-offset-2.col-sm-10
-						button(type="submit").btn.btn-primary Publish
+					div.form-group
+						div.col-sm-offset-2.col-sm-10
+							button(type="submit").btn.btn-primary Publish
 
 block append scripts
 	script(src="/js/scripts.js")

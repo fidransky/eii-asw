@@ -3,22 +3,25 @@ extends layout
 include mixins.jade
 
 block content
-	div.text-center
-		h1 express your opinion to the world!
-		h2.text-muted share your music taste using our Spotify-connected reviews
-		div.cta-buttons
-			a(href="/log/in").btn.btn-primary.btn-lg Get started
-			a(href="#latest-reviews").btn.btn-default.btn-lg See latest reviews
+	.content
+		.hero-section
+			.container.text-center
+				h1.hero-title share your music taste with the world!
+				h2.hero-subtitle.text-muted express your opinion using our Spotify-connected reviews
+				div.hero-cta-buttons
+					a(href="#latest-reviews").btn.btn-default.btn-lg See latest reviews
+					a(href="/log/in").btn.btn-primary.btn-lg Get started
 
-	h1#latest-reviews latest reviews
-	div.row
-		each review, index in reviews
-			div.review.col-md-3.col-sm-6
-				a(href="/#{review.author}").review-author
-					= review.author
+		.reviews-section.container
+			h2.text-muted#latest-reviews latest reviews
+			div.row
+				each review, index in reviews
+					div.review.col-md-3.col-sm-6
+						a(href="/#{review.author}").review-author
+							= review.author
 
-				h2.review-title
-					a(href="/#{review.author}/review/#{review.id}")
-						= review.title
+						h2.review-title
+							a(href="/#{review.author}/review/#{review.id}")
+								= review.title
 
-				+rating(review.rating)
+						+rating(review.rating)

@@ -1,6 +1,7 @@
 extends layout
 
 block content
-	h1 #{user.username}'s reviews
+	.content.container
+		h1 #{user.username}'s reviews
 
-	include review/list.jade
+		include review/list.jade

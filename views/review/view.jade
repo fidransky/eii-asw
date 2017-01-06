@@ -19,77 +19,78 @@ mixin reaction(entity, action)
 				span.badge= entity.reactions.downs
 
 block content
-	ol.breadcrumb
-		case spotifyItem.type
-			when 'artist'
-				li.active
-					+artist(spotifyItem)
-			when 'album'
-				li
-					each artist, index in spotifyItem.artists
-						+artist(artist)
-						if index !== (spotifyItem.artists.length - 1)
-							= ', '
-				li.active
-					+album(spotifyItem)
-			when 'track'
-				li
-					each artist, index in spotifyItem.artists
-						+artist(artist)
-						if index !== (spotifyItem.artists.length - 1)
-							= ', '
-				li
-					+album(spotifyItem.album)
-				li.active
-					+track(spotifyItem)
+	.content.container
+		ol.breadcrumb
+			case spotifyItem.type
+				when 'artist'
+					li.active
+						+artist(spotifyItem)
+				when 'album'
+					li
+						each artist, index in spotifyItem.artists
+							+artist(artist)
+							if index !== (spotifyItem.artists.length - 1)
+								= ', '
+					li.active
+						+album(spotifyItem)
+				when 'track'
+					li
+						each artist, index in spotifyItem.artists
+							+artist(artist)
+							if index !== (spotifyItem.artists.length - 1)
+								= ', '
+					li
+						+album(spotifyItem.album)
+					li.active
+						+track(spotifyItem)
 
-	a(href="/#{review.author}").review-author
-		= review.author
+		a(href="/#{review.author}").review-author
+			= review.author
 
-	h1.review-title
-		= review.title
+		h1.review-title
+			= review.title
 
-	if loggedUser && review.author === loggedUser.spotify_id
-		a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-default.bg-danger Delete the review
+		if loggedUser && review.author === loggedUser.spotify_id
+			a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-default.bg-danger Delete the review
 
-	+rating(review.rating)
+		+rating(review.rating)
 
-	div.review-text
-		= review.text
+		div.review-text
+			= review.text
 
-	iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}&theme=white", width="300", height="380", frameborder="0", allowtransparency="true").review-player
+		iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}&theme=white", width="300", height="380", frameborder="0", allowtransparency="true").review-player
 
-	div#reactions
-		h3 Reactions
+		div#reactions
+			h3 Reactions
 
-		+reaction(review, "reaction")
+			+reaction(review, "reaction")
 
-	div#comments
-		h3 Comments
+		div#comments
+			h3 Comments
 
-		form(method="post", action="#{review.id}/comment").form-horizontal
-			div.form-group
-				label(for="author").col-sm-2.control-label Author
-				div.col-sm-6
-					input(type="text", name="author").form-control#author
+			form(method="post", action="#{review.id}/comment").form-horizontal
+				div.form-group
+					label(for="author").col-sm-2.control-label Author
+					div.col-sm-8
+						input(type="text", name="author").form-control#author
 
-			div.form-group
-				label(for="title").col-sm-2.control-label Title
-				div.col-sm-6
-					input(type="text", name="title").form-control#title
+				div.form-group
+					label(for="title").col-sm-2.control-label Title
+					div.col-sm-8
+						input(type="text", name="title").form-control#title
 
-			div.form-group
-				label(for="text").col-sm-2.control-label Text
-				div.col-sm-6
-					textarea(name="text").form-control#text
+				div.form-group
+					label(for="text").col-sm-2.control-label Text
+					div.col-sm-8
+						textarea(name="text").form-control#text
 
-			div.form-group
-				div.col-sm-offset-2.col-sm-10
-					button(type="submit").btn.btn-primary Comment
+				div.form-group
+					div.col-sm-offset-2.col-sm-10
+						button(type="submit").btn.btn-primary Comment
 
-		each comment, index in review.comments
-			strong= comment.author
-			span= comment.title
-			div= comment.text
+			each comment, index in review.comments
+				strong= comment.author
+				span= comment.title
+				div= comment.text
 
-			+reaction(comment, "comment/"+ comment.id +"/reaction")
+				+reaction(comment, "comment/"+ comment.id +"/reaction")
