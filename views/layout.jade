@@ -28,7 +28,7 @@ html
 						if !loggedUser
 							li
 								a(href="/log/in") Login using
-									img(src="spotify-logo.png").spotify-logo
+									img(src="/spotify-logo.png").spotify-logo
 						else
 							li
 								a(href="/#{loggedUser.spotify_id}/review/add").btn.btn-primary.navbar-btn Add a new review

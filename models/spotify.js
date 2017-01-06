@@ -10,7 +10,7 @@ var User = mongoose.model('User');
 var scope = 'user-read-private user-read-email';
 var client_id = 'd9fcafc0362941b98aca40d58b8cf310';
 var client_secret = 'e055dbaa51f54eeba717388d6cad9caa';
-var redirect_uri = 'http://localhost:3000/log/callback';
+var redirect_uri = (process.env.COMPUTERNAME === 'THINKPAD' ? 'http://localhost:3000' : 'https://critify.herokuapp.com') + '/log/callback';
 
 
 module.exports = {
