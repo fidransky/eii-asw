@@ -25,14 +25,14 @@ html
 
 				.navbar-collapse.collapse#navbar
 					ul.nav.navbar-nav.navbar-right
-						if !user
+						if !loggedUser
 							li
 								a(href="/log/in") Login using Spotify
 						else
 							li
-								a(href="/#{user.spotify_id}/reviews/add").btn.btn-primary.navbar-btn Add a new review
+								a(href="/#{loggedUser.spotify_id}/review/add").btn.btn-primary.navbar-btn Add a new review
 							li
-								a(href="/#{user.spotify_id}/reviews") Your reviews
+								a(href="/#{loggedUser.spotify_id}") Your reviews
 							li
 								a(href="/log/out") Logout
 
