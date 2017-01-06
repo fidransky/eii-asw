@@ -10,7 +10,7 @@ var reviewSchema = new Schema({
 	spotify_item_id: { type: String, required: true },
 	title: String,
 	text: { type: String, required: true },
-	rating: Number,
+	rating: { type: Number, min: 1, max: 5 },
 	created_at: Date,
 	comments: [commentSchema],
 	reactions: [reactionSchema],

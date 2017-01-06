@@ -15,8 +15,11 @@ router.get('/', function(req, res, next) {
 		reviews: function(cb) {
 			return Review.find({
 				author: req.params.userId,
-			}, cb);
+			}).sort({
+				created_at: -1,
+			}).exec(cb);
 		},
+
 	}, function(err, results) {
 		res.render('user-detail', results);
 	});

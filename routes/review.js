@@ -79,12 +79,11 @@ router.post('/add', spotify.ensureAuthenticated, function(req, res, next) {
 
 /* GET view review page. */
 router.get('/:id', function(req, res, next) {
-	Review.find({
+	Review.findOne({
 		_id: req.params.id,
-	}, function(err, reviews) {
+	}, function(err, review) {
 		if (err) throw err;
 
-		var review = reviews[0];
 		review = countReactions(review);
 		review.comments = review.comments.map(function(comment) {
 			return countReactions(comment);
@@ -104,12 +103,11 @@ router.post('/:id/reaction', spotify.ensureAuthenticated, function(req, res, nex
 		type: reactionData.type,
 	});
 
-	Review.find({
+	Review.findOne({
 		_id: req.params.id,
-	}, function(err, reviews) {
+	}, function(err, review) {
 		if (err) throw err;
 
-		var review = reviews[0];
 		review.reactions.push(reaction);
 
 		// save the review
@@ -131,12 +129,11 @@ router.post('/:id/comment', spotify.ensureAuthenticated, function(req, res, next
 		reactions: [],
 	});
 
-	Review.find({
+	Review.findOne({
 		_id: req.params.id,
-	}, function(err, reviews) {
+	}, function(err, review) {
 		if (err) throw err;
 
-		var review = reviews[0];
 		review.comments.push(comment);
 
 		// save the review
@@ -156,12 +153,11 @@ router.post('/:id/comment/:commentId/reaction', spotify.ensureAuthenticated, fun
 		type: reactionData.type,
 	});
 
-	Review.find({
+	Review.findOne({
 		_id: req.params.id,
-	}, function(err, reviews) {
+	}, function(err, review) {
 		if (err) throw err;
 
-		var review = reviews[0];
 		var comment = review.comments.id(req.params.commentId);
 		comment.reactions.push(reaction);
 
