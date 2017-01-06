@@ -1,12 +1,6 @@
 extends layout
 
 block content
-	h1 #{user.username}'s board
+	h1 #{user.username}'s reviews
 
-	each review, index in reviews
-		h2
-			a(href="#{user.spotify_id}/reviews/#{review.id}") #{review.title}
-
-		iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}", width="300", height="380", frameborder="0", allowtransparency="true")
-
-		div #{review.text}
+	include review/list.jade

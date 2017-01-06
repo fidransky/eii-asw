@@ -1,5 +1,7 @@
 extends ../layout
 
+include ../mixins.jade
+
 block content
 	h1 Add a new review
 
@@ -52,7 +54,6 @@ block content
 						div.row
 							each item, index in data.artists.items
 								div(data-id="#{item.id}", data-type="artist").col-md-3.spotify-item.spotify-artist
-									img(src="#{item.images[0].url}").img-responsive
 									span=item.name
 
 				div(role="tabpanel", class={ active: selectedType === 'albums' }).tab-pane#albums
@@ -91,7 +92,7 @@ block content
 				div.form-group
 					label(for="rating").col-sm-2.control-label Your rating
 					div.col-sm-10
-						input(type="number", name="rating").form-control#rating
+						input(type="number", name="rating", min="1", max="5", step="1").form-control#rating
 
 				div.form-group
 					div.col-sm-offset-2.col-sm-10

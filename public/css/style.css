@@ -1,8 +1,40 @@
+html {
+	height: 100%;
+}
+
 body {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
 	font-family: 'Merriweather', serif;
 	padding-top: 70px;
 }
 
+a,
+.btn-link {
+	color: #009C3A;
+}
+
+a:focus,
+a:hover,
+.btn-link:focus,
+.btn-link:hover {
+	color: #1ED763;
+}
+
+.btn-primary {
+	background-color: #009C3A;
+	border-width: 0;
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+	background-color: #1ED763;	
+}
+
+.display-inline {
+	display: inline;
+}
 
 .navbar-brand {
 	height: 70px;
@@ -15,4 +47,45 @@ body {
 		padding-top: 25px;
 		padding-bottom: 25px;
 	}
+}
+
+.breadcrumb {
+	color: #ccc;
+	border-radius: 0;
+}
+
+.breadcrumb a {
+	color: #a0a0a0;
+}
+
+
+.content {
+	flex: 1;
+}
+
+.footer {
+	color: #fff;
+	margin-top: 25px;
+	padding: 15px;
+	background-color: #ccc;
+}
+
+.review {
+	margin-top: 20px;
+}
+
+.review-author {
+	color: #a0a0a0;
+}
+
+.review-title {
+	margin-top: 0;
+}
+
+.review-title a {
+	color: #333;
+}
+
+.review-player {
+	margin-top: 10px;
 }

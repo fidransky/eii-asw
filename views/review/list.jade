@@ -1,12 +1,14 @@
-extends ../layout
+include ../mixins.jade
 
-block content
-	h1 #{user.username}'s reviews
+each review, index in reviews
+	div.review
+		a(href="/#{review.author}").review-author
+			= review.author
 
-	each review, index in reviews
-		h2
-			a(href="reviews/#{review.id}") #{review.title}
+		h2.review-title
+			a(href="/#{review.author}/review/#{review.id}")
+				= review.title
 
-		iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}", width="300", height="380", frameborder="0", allowtransparency="true")
+		+rating(review.rating)
 
-		div #{review.text}
+		iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}&theme=white", width="300", height="80", frameborder="0", allowtransparency="true").review-player

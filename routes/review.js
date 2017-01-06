@@ -77,6 +77,21 @@ router.post('/add', spotify.ensureAuthenticated, function(req, res, next) {
 	res.redirect('/'+ req.user.spotify_id);
 });
 
+/* GET delete review page. */
+router.get('/:id/delete', function(req, res, next) {
+	Review.findOne({
+		_id: req.params.id,
+	}, function(err, review) {
+		if (err) throw err;
+
+		review.remove(function(err) {
+			if (err) throw err;
+
+			res.redirect('/'+ req.user.spotify_id);
+		});
+	});
+});
+
 /* GET view review page. */
 router.get('/:id', function(req, res, next) {
 	Review.findOne({
@@ -85,12 +100,28 @@ router.get('/:id', function(req, res, next) {
 		if (err) throw err;
 
 		review = countReactions(review);
-		review.comments = review.comments.map(function(comment) {
-			return countReactions(comment);
-		});
+		review.comments = review.comments.map(countReactions);
 
-		res.render('review/view', {
-			review: review,
+		var spotifyItemPromise;
+		switch (review.spotify_item_type) {
+			case 'artist':
+				spotifyItemPromise = spotifyApi.getArtist(review.spotify_item_id);
+				break;
+			case 'album':
+				spotifyItemPromise = spotifyApi.getAlbum(review.spotify_item_id);
+				break;
+			case 'track':
+				spotifyItemPromise = spotifyApi.getTrack(review.spotify_item_id);
+				break;
+		}
+
+		spotifyItemPromise.then(function(data) {
+			console.log(data.body);
+
+			res.render('review/view', {
+				review: review,
+				spotifyItem: data.body,
+			});
 		});
 	});
 });

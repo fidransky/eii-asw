@@ -1,30 +1,63 @@
 extends ../layout
 
+include ../mixins.jade
+
 mixin reaction(entity, action)
-	span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
-	span.badge= entity.reactions.ups
+	div.btn-group
+		form(method="post", action="#{review.id}/#{action}").display-inline
+			input(type="hidden", name="type", value="up")
 
-	span(aria-hidden="true").glyphicon.glyphicon-thumbs-down
-	span.badge= entity.reactions.downs
+			button(type="submit").btn.btn-link
+				span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
+				span.badge= entity.reactions.ups
 
-	form(method="post", action="#{review.id}/#{action}")
-		input(type="hidden", name="type", value="up")
+		form(method="post", action="#{review.id}/#{action}").display-inline
+			input(type="hidden", name="type", value="down")
 
-		button(type="submit").btn.btn-default
-			span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
-
-	form(method="post", action="#{review.id}/#{action}")
-		input(type="hidden", name="type", value="down")
-
-		button(type="submit").btn.btn-default
-			span(aria-hidden="true").glyphicon.glyphicon-thumbs-down
+			button(type="submit").btn.btn-link
+				span(aria-hidden="true").glyphicon.glyphicon-thumbs-down
+				span.badge= entity.reactions.downs
 
 block content
-	h1 #{review.title}
+	ol.breadcrumb
+		case spotifyItem.type
+			when 'artist'
+				li.active
+					+artist(spotifyItem)
+			when 'album'
+				li
+					each artist, index in spotifyItem.artists
+						+artist(artist)
+						if index !== (spotifyItem.artists.length - 1)
+							= ', '
+				li.active
+					+album(spotifyItem)
+			when 'track'
+				li
+					each artist, index in spotifyItem.artists
+						+artist(artist)
+						if index !== (spotifyItem.artists.length - 1)
+							= ', '
+				li
+					+album(spotifyItem.album)
+				li.active
+					+track(spotifyItem)
 
-	iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}", width="300", height="380", frameborder="0", allowtransparency="true")
+	a(href="/#{review.author}").review-author
+		= review.author
 
-	div #{review.text}
+	h1.review-title
+		= review.title
+
+	if loggedUser && review.author === loggedUser.spotify_id
+		a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-default.bg-danger Delete the review
+
+	+rating(review.rating)
+
+	div.review-text
+		= review.text
+
+	iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}&theme=white", width="300", height="380", frameborder="0", allowtransparency="true").review-player
 
 	div#reactions
 		h3 Reactions
@@ -37,17 +70,17 @@ block content
 		form(method="post", action="#{review.id}/comment").form-horizontal
 			div.form-group
 				label(for="author").col-sm-2.control-label Author
-				div.col-sm-10
+				div.col-sm-6
 					input(type="text", name="author").form-control#author
 
 			div.form-group
 				label(for="title").col-sm-2.control-label Title
-				div.col-sm-10
+				div.col-sm-6
 					input(type="text", name="title").form-control#title
 
 			div.form-group
 				label(for="text").col-sm-2.control-label Text
-				div.col-sm-10
+				div.col-sm-6
 					textarea(name="text").form-control#text
 
 			div.form-group

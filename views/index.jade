@@ -1,12 +1,24 @@
 extends layout
 
+include mixins.jade
+
 block content
-	h1 latest reviews
+	div.text-center
+		h1 express your opinion to the world!
+		h2.text-muted share your music taste using our Spotify-connected reviews
+		div.cta-buttons
+			a(href="/log/in").btn.btn-primary.btn-lg Get started
+			a(href="#latest-reviews").btn.btn-default.btn-lg See latest reviews
 
-	each review, index in reviews
-		h2
-			a(href="#{review.author}/reviews/#{review.id}") #{review.title}
+	h1#latest-reviews latest reviews
+	div.row
+		each review, index in reviews
+			div.review.col-md-3.col-sm-6
+				a(href="/#{review.author}").review-author
+					= review.author
 
-		iframe(src="https://embed.spotify.com/?uri=spotify:#{review.spotify_item_type}:#{review.spotify_item_id}", width="300", height="380", frameborder="0", allowtransparency="true")
+				h2.review-title
+					a(href="/#{review.author}/review/#{review.id}")
+						= review.title
 
-		div #{review.text}
+				+rating(review.rating)
