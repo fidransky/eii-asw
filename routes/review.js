@@ -20,24 +20,6 @@ var countReactions = function(entity) {
 	return entity;
 };
 
-/* GET list reviews page. */
-router.get('/', function(req, res, next) {
-	async.parallel({
-		user: function(cb) {
-			return User.findOne({ spotify_id: req.params.userId }, cb);
-		},
-		reviews: function(cb) {
-			return Review.find({
-				author: req.params.userId,
-			}).sort({
-				created_at: -1,
-			}).exec(cb);
-		},
-	}, function(err, results) {
-		res.render('review/list', results);
-	});
-});
-
 /* GET add review page. */
 router.get('/add', spotify.ensureAuthenticated, function(req, res, next) {
 	var term = req.query.q;
@@ -92,7 +74,7 @@ router.post('/add', spotify.ensureAuthenticated, function(req, res, next) {
 		if (err) throw err;
 	});
 
-	res.redirect('/'+ req.user.spotify_id +'/reviews');
+	res.redirect('/'+ req.user.spotify_id);
 });
 
 /* GET view review page. */
@@ -135,7 +117,7 @@ router.post('/:id/reaction', spotify.ensureAuthenticated, function(req, res, nex
 			if (err) throw err;
 		});
 
-		res.redirect('/'+ req.user.spotify_id +'/reviews/' + review.id + '#reactions');
+		res.redirect('/'+ req.user.spotify_id +'/review/' + review.id + '#reactions');
 	});
 });
 
@@ -162,7 +144,7 @@ router.post('/:id/comment', spotify.ensureAuthenticated, function(req, res, next
 			if (err) throw err;
 		});
 
-		res.redirect('/'+ req.user.spotify_id +'/reviews/' + review.id + '#comments');
+		res.redirect('/'+ req.user.spotify_id +'/review/' + review.id + '#comments');
 	});
 });
 
@@ -188,7 +170,7 @@ router.post('/:id/comment/:commentId/reaction', spotify.ensureAuthenticated, fun
 			if (err) throw err;
 		});
 
-		res.redirect('/'+ req.user.spotify_id +'/reviews/' + req.params.id + '#comments');
+		res.redirect('/'+ req.user.spotify_id +'/review/' + req.params.id + '#comments');
 	});
 });
 

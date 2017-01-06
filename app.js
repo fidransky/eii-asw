@@ -73,7 +73,7 @@ app.use('/artist', spotifyItem);
 app.use('/album', spotifyItem);
 app.use('/track', spotifyItem);
 app.use('/:userId', users);
-app.use('/:userId/reviews', reviews);
+app.use('/:userId/review', reviews);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
