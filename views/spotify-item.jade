@@ -1,0 +1,27 @@
+extends layout
+
+include mixins.jade
+
+block content
+	ol.breadcrumb
+		case spotifyItem.type
+			when 'album'
+				li
+					each artist, index in spotifyItem.artists
+						+artist(artist)
+						if index !== (spotifyItem.artists.length - 1)
+							= ', '
+			when 'track'
+				li
+					each artist, index in spotifyItem.artists
+						+artist(artist)
+						if index !== (spotifyItem.artists.length - 1)
+							= ', '
+				li
+					+album(spotifyItem.album)
+
+	h1 #{spotifyItem.name}
+
+	h2.text-muted reviews
+
+	include review/list.jade

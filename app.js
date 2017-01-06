@@ -54,6 +54,7 @@ app.locals.title = 'Critify!';
 
 var index = require('./routes/index');
 var log = require('./routes/login');
+var spotifyItem = require('./routes/spotify-item');
 var users = require('./routes/users');
 var reviews = require('./routes/review');
 
@@ -68,6 +69,9 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/log', log);
+app.use('/artist', spotifyItem);
+app.use('/album', spotifyItem);
+app.use('/track', spotifyItem);
 app.use('/:userId', users);
 app.use('/:userId/reviews', reviews);
 
