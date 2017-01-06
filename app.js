@@ -50,7 +50,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // set global variables
-app.locals.title = 'Critify!';
+app.locals.appName = 'Critify!';
+app.locals.title = '';
 
 var index = require('./routes/index');
 var log = require('./routes/login');

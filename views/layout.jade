@@ -6,7 +6,7 @@ html
 		meta(http-equiv="X-UA-Compatible", content="IE=edge")
 		meta(name="viewport", content="width=device-width", initial-scale="1.0")
 
-		title=title
+		title= appName
 
 		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
 		link(href="https://fonts.googleapis.com/css?family=Merriweather", rel="stylesheet")
@@ -21,7 +21,7 @@ html
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					a.navbar-brand(href="/") #{title}
+					a.navbar-brand(href="/")= appName
 
 				.navbar-collapse.collapse#navbar
 					ul.nav.navbar-nav.navbar-right
@@ -36,8 +36,12 @@ html
 							li
 								a(href="/log/out") Logout
 
-		.container
+		.container.content
 			block content
+
+		.footer
+			.container
+				span &copy; #{appName}
 
 		block scripts
 			script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
