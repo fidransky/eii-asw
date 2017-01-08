@@ -2,22 +2,6 @@ extends ../layout
 
 include ../mixins.jade
 
-mixin reaction(entity, action)
-	div.btn-group
-		form(method="post", action="#{review.id}/#{action}").display-inline
-			input(type="hidden", name="type", value="up")
-
-			button(type="submit").btn.btn-link
-				span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
-				span.badge= entity.reactions.ups
-
-		form(method="post", action="#{review.id}/#{action}").display-inline
-			input(type="hidden", name="type", value="down")
-
-			button(type="submit").btn.btn-link
-				span(aria-hidden="true").glyphicon.glyphicon-thumbs-down
-				span.badge= entity.reactions.downs
-
 block content
 	.content.container
 		ol.breadcrumb
@@ -47,11 +31,11 @@ block content
 		a(href="/#{review.author}").review-author
 			= review.author
 
+		if loggedUser && review.author === loggedUser.spotify_id
+			a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-default.bg-danger.pull-right Delete the review
+
 		h1.review-title
 			= review.title
-
-		if loggedUser && review.author === loggedUser.spotify_id
-			a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-default.bg-danger Delete the review
 
 		+rating(review.rating)
 
@@ -89,8 +73,9 @@ block content
 						button(type="submit").btn.btn-primary Comment
 
 			each comment, index in review.comments
-				strong= comment.author
-				span= comment.title
-				div= comment.text
+				.comment
+					strong.comment-author= comment.author
+					p.comment-title= comment.title
+					div.comment-text= comment.text
 
-				+reaction(comment, "comment/"+ comment.id +"/reaction")
+					+reaction(comment, "comment/"+ comment.id +"/reaction")

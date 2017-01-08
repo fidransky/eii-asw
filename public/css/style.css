@@ -99,6 +99,15 @@ a:active,
 	background-color: #ccc;
 }
 
+.reaction-component .btn {
+	padding: 6px 0;
+	margin-right: 10px;
+}
+
+.reaction-component .badge {
+	margin-left: 6px;
+}
+
 .navbar .spotify-logo {
 	position: relative;
 	top: -6px;
@@ -173,6 +182,14 @@ a:active,
 	margin-top: 10px;
 }
 
-.review-rating {
+.review .rating-component {
 	font-size: 20px;
+}
+
+.comment {
+	margin-top: 20px;
+}
+
+.comment .reaction-component {
+	margin-top: 10px;
 }
