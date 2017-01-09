@@ -17,14 +17,14 @@ mixin rating(rating)
 
 mixin reaction(entity, action)
 	.reaction-component.btn-group
-		form(method="post", action="#{review.id}/#{action}").display-inline
+		form(method="post", action="#{entity.id}/#{action}").display-inline
 			input(type="hidden", name="type", value="up")
 
 			button(type="submit").btn.btn-link
 				span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
 				span.badge= entity.reactions.ups
 
-		form(method="post", action="#{review.id}/#{action}").display-inline
+		form(method="post", action="#{entity.id}/#{action}").display-inline
 			input(type="hidden", name="type", value="down")
 
 			button(type="submit").btn.btn-link

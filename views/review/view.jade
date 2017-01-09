@@ -31,11 +31,10 @@ block content
 		a(href="/#{review.author}").review-author
 			= review.author
 
-		if loggedUser && review.author === loggedUser.spotify_id
-			a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-default.bg-danger.pull-right Delete the review
-
 		h1.review-title
 			= review.title
+			if loggedUser && review.author === loggedUser.spotify_id
+				a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-danger.pull-right Delete the review
 
 		+rating(review.rating)
 

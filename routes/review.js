@@ -116,8 +116,6 @@ router.get('/:id', function(req, res, next) {
 		}
 
 		spotifyItemPromise.then(function(data) {
-			console.log(data.body);
-
 			res.render('review/view', {
 				review: review,
 				spotifyItem: data.body,

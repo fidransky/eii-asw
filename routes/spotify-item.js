@@ -37,8 +37,6 @@ router.get('/:spotifyItemId', function(req, res, next) {
 		},
 
 	}, function(err, results) {
-		console.log(results.spotifyItem);
-
 		res.render('spotify-item', results);
 	});
 });
