@@ -1,6 +1,7 @@
 extends ../layout
 
-include ../mixins.jade
+include ../components.jade
+include ../forms.jade
 
 block content
 	.content.container
@@ -76,28 +77,7 @@ block content
 			div.hidden#write-review-box
 				h2.text-muted 3. Write your review
 
-				form(method="post").form-horizontal
-					input(type="hidden", name="spotifyItemType")#spotifyItemType
-					input(type="hidden", name="spotifyItemId")#spotifyItemId
-
-					div.form-group
-						label(for="title").col-sm-2.control-label Title
-						div.col-sm-8
-							input(type="text", name="title").form-control#title
-
-					div.form-group
-						label(for="text").col-sm-2.control-label Text
-						div.col-sm-8
-							textarea(name="text", rows="20").form-control#text
-
-					div.form-group
-						label(for="rating").col-sm-2.control-label Your rating
-						div.col-sm-8
-							input(type="number", name="rating", min="1", max="5", step="1").form-control#rating
-
-					div.form-group
-						div.col-sm-offset-2.col-sm-10
-							button(type="submit").btn.btn-primary Publish
+				+reviewForm(null)
 
 block append scripts
 	script(src="/js/scripts.js")

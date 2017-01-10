@@ -1,6 +1,7 @@
 extends ../layout
 
-include ../mixins.jade
+include ../components.jade
+include ../forms.jade
 
 block content
 	.content.container
@@ -34,7 +35,9 @@ block content
 		h1.review-title
 			= review.title
 			if loggedUser && review.author === loggedUser.spotify_id
-				a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-danger.pull-right Delete the review
+				.btn-group.pull-right
+					a(href="/#{review.author}/review/#{review.id}/edit", role="button").btn.btn-default Edit the review
+					a(href="/#{review.author}/review/#{review.id}/delete", role="button").btn.btn-danger Delete the review
 
 		+rating(review.rating)
 
@@ -46,35 +49,20 @@ block content
 		div#reactions
 			h3 Reactions
 
-			+reaction(review, "reaction")
+			+reactionForm(review, "reaction")
 
 		div#comments
 			h3 Comments
 
-			form(method="post", action="#{review.id}/comment").form-horizontal
-				div.form-group
-					label(for="author").col-sm-2.control-label Author
-					div.col-sm-8
-						input(type="text", name="author").form-control#author
-
-				div.form-group
-					label(for="title").col-sm-2.control-label Title
-					div.col-sm-8
-						input(type="text", name="title").form-control#title
-
-				div.form-group
-					label(for="text").col-sm-2.control-label Text
-					div.col-sm-8
-						textarea(name="text").form-control#text
-
-				div.form-group
-					div.col-sm-offset-2.col-sm-10
-						button(type="submit").btn.btn-primary Comment
+			+commentForm
 
 			each comment, index in review.comments
 				.comment
-					strong.comment-author= comment.author
+					a(href="/#{comment.author}").comment-author
+						= comment.author
+
 					p.comment-title= comment.title
+
 					div.comment-text= comment.text
 
-					+reaction(comment, "comment/"+ comment.id +"/reaction")
+					+reactionForm(comment, "comment/"+ comment.id +"/reaction")

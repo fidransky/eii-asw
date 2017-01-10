@@ -1,0 +1,10 @@
+extends ../layout
+
+include ../components.jade
+include ../forms.jade
+
+block content
+	.content.container
+		h1 Edit the review
+
+		+reviewForm(review)

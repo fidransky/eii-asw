@@ -55,7 +55,7 @@ router.get('/add', spotify.ensureAuthenticated, function(req, res, next) {
 	}
 });
 
-router.post('/add', spotify.ensureAuthenticated, function(req, res, next) {
+router.post('/save', spotify.ensureAuthenticated, function(req, res, next) {
 	var reviewData = req.body;
 
 	var review = Review({
@@ -75,6 +75,41 @@ router.post('/add', spotify.ensureAuthenticated, function(req, res, next) {
 	});
 
 	res.redirect('/'+ req.user.spotify_id);
+});
+
+/* GET edit review page. */
+router.get('/:id/edit', function(req, res, next) {
+	Review.findOne({
+		_id: req.params.id,
+	}, function(err, review) {
+		if (err) throw err;
+
+		res.render('review/edit', {
+			review: review,
+		});
+	});
+});
+
+router.post('/:id/save', function(req, res, next) {
+	Review.findOne({
+		_id: req.params.id,
+	}, function(err, review) {
+		if (err) throw err;
+
+		// update the review
+		var reviewData = req.body;
+
+		review.title = reviewData.title;
+		review.text = reviewData.text;
+		review.rating = reviewData.rating;
+
+		// save the review
+		review.save(function(err) {
+			if (err) throw err;
+		});
+
+		res.redirect('/'+ req.user.spotify_id);
+	});
 });
 
 /* GET delete review page. */
@@ -128,7 +163,7 @@ router.post('/:id/reaction', spotify.ensureAuthenticated, function(req, res, nex
 	var reactionData = req.body;
 
 	var reaction = Reaction({
-		author: req.user ? req.user.spotify_id : null,
+		author: req.user.spotify_id,
 		type: reactionData.type,
 	});
 
@@ -152,7 +187,7 @@ router.post('/:id/comment', spotify.ensureAuthenticated, function(req, res, next
 	var commentData = req.body;
 
 	var comment = Comment({
-		author: commentData.author,
+		author: req.user.spotify_id,
 		title: commentData.title,
 		text: commentData.text,
 		reactions: [],
@@ -178,7 +213,7 @@ router.post('/:id/comment/:commentId/reaction', spotify.ensureAuthenticated, fun
 	var reactionData = req.body;
 
 	var reaction = Reaction({
-		author: req.user ? req.user.spotify_id : null,
+		author: req.user.spotify_id,
 		type: reactionData.type,
 	});
 

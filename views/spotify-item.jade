@@ -1,6 +1,6 @@
 extends layout
 
-include mixins.jade
+include components.jade
 
 block content
 	.content.container
@@ -25,4 +25,10 @@ block content
 
 		h2.text-muted reviews
 
-		include review/list.jade
+		if reviews.length === 0
+			p(role="alert").alert.alert-info
+				= 'There are no review yet. '
+				a(href="/log/in") Be the first
+				= ' to write one!'
+		else
+			include review/list.jade

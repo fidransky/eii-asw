@@ -1,0 +1,16 @@
+mixin artist(artist)
+	a(href="/artist/#{artist.id}")
+		= artist.name
+
+mixin album(album)
+	a(href="/album/#{album.id}")
+		= album.name
+
+mixin track(track)
+	a(href="/track/#{track.id}")
+		= track.name
+
+mixin rating(rating)
+	.rating-component
+			- for (var i=0; i<5; i++)
+				span(class={ 'glyphicon-star': rating > i, 'glyphicon-star-empty': rating <= i, }, aria-hidden="true").glyphicon

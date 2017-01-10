@@ -1,0 +1,68 @@
+mixin reviewForm(review)
+	form(method="post", action="save").form-horizontal
+		input(type="hidden", name="spotifyItemType", value=(review ? review.spotify_item_type : ''))#spotifyItemType
+		input(type="hidden", name="spotifyItemId", value=(review ? review.spotify_item_id : ''))#spotifyItemId
+
+		div.form-group
+			label(for="title").col-sm-2.control-label Title
+			div.col-sm-8
+				input(type="text", name="title", value=(review ? review.title : '')).form-control#title
+
+		div.form-group
+			label(for="text").col-sm-2.control-label Text
+			div.col-sm-8
+				textarea(name="text", rows="20").form-control#text
+					= (review ? review.text : '')
+
+		div.form-group
+			label(for="rating").col-sm-2.control-label Your rating
+			div.col-sm-8
+				input(type="number", name="rating", value=(review ? review.rating : ''), min="1", max="5", step="1").form-control#rating
+
+		div.form-group
+			div.col-sm-offset-2.col-sm-10
+				button(type="submit").btn.btn-primary Publish
+
+mixin reactionForm(entity, action)
+	- var attributes = {};
+	if !loggedUser
+		- attributes.disabled = 'disabled';
+		- attributes.title = 'Reacting is only allowed to logged in users.';
+
+	.reaction-component.btn-group
+		form(method="post", action="#{review.id}/#{action}").display-inline
+			input(type="hidden", name="type", value="up")
+
+			button(type="submit").btn.btn-link&attributes(attributes)
+				span(aria-hidden="true").glyphicon.glyphicon-thumbs-up
+
+			span.badge= entity.reactions.ups
+
+		form(method="post", action="#{review.id}/#{action}").display-inline
+			input(type="hidden", name="type", value="down")
+
+			button(type="submit").btn.btn-link&attributes(attributes)
+				span(aria-hidden="true").glyphicon.glyphicon-thumbs-down
+
+			span.badge= entity.reactions.downs
+
+mixin commentForm
+	- var attributes = {};
+	if !loggedUser
+		- attributes.disabled = 'disabled';
+		- attributes.title = 'Commenting is only allowed to logged in users.';
+
+	form(method="post", action="#{review.id}/comment").form-horizontal
+		div.form-group
+			label(for="title").col-sm-2.control-label Title
+			div.col-sm-8
+				input(type="text", name="title").form-control#title
+
+		div.form-group
+			label(for="text").col-sm-2.control-label Text
+			div.col-sm-8
+				textarea(name="text").form-control#text
+
+		div.form-group
+			div.col-sm-offset-2.col-sm-10
+				button(type="submit").btn.btn-primary&attributes(attributes) Comment

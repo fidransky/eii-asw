@@ -36,6 +36,10 @@ a:active,
 	background-color: #1ED763 !important;
 }
 
+.btn-danger {
+	color: #FFF !important;
+}
+
 .form-control:focus {
 	border-color: #1ED763;
 }
@@ -100,12 +104,8 @@ a:active,
 }
 
 .reaction-component .btn {
-	padding: 6px 0;
-	margin-right: 10px;
-}
-
-.reaction-component .badge {
-	margin-left: 6px;
+	padding: 6px;
+	margin-left: 4px;
 }
 
 .navbar .spotify-logo {
@@ -188,6 +188,11 @@ a:active,
 
 .comment {
 	margin-top: 20px;
+}
+
+.comment-author {
+	color: #333 !important;
+	font-weight: bold;
 }
 
 .comment .reaction-component {
